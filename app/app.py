@@ -4,7 +4,6 @@ from PIL import Image
 import requests
 import json
 import matplotlib.pyplot as plt
-#from streamlit_shap import st_shap
 import shap
 import pickle
 import pandas as pd
@@ -219,7 +218,7 @@ if predict_btn:
     app_features_values['INSTAL_DAYS_ENTRY_PAYMENT_SUM'],
     app_features_values['PREV_APP_CREDIT_PERC_MEAN'],
     app_features_values['BURO_DAYS_CREDIT_MAX']]
-    api_url_calc = f'http://127.0.0.1:8000/api/v1/predict'
+    api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     pred = request_prediction(api_url_calc, data)
     prediction_list = pred.get("prediction", None)
     pred_score = prediction_list[0][1]
@@ -309,7 +308,7 @@ graph1 = graph_two_features(feature_selected_1,feature_selected_2)
 st.pyplot(graph1)
 
 # Charger l'image de feature importance globale
-feature_importance = Image.open('feature_importance_globale.png')
+feature_importance = Image.open('app/feature_importance_globale.png')
 
 # Créer une case à cocher
 show_image = st.checkbox("Afficher l'importance globale des variables")
