@@ -55,17 +55,20 @@ def get_predicted_score(): #valeurs des variables
     content = json.loads(predicted_score_customer_id.content.decode('utf-8'))
     return content
 
-def request_prediction(api_url_calc, data):
+def request_prediction(api_url_calc, data, max_retries=3):
     headers = {"Content-Type": "application/json"}
-
     data_json = {'data': data}
-    response = requests.request(
-        method='POST', headers=headers, url=api_url_calc, json=data_json, timeout=10)
-
-    if response.status_code != 200:
-        raise Exception(
-            "Request failed with status {}, {}".format(response.status_code, response.text))
-
+    for attempt in range(max_retries):
+        try:
+        response = requests.request(
+            method='POST', headers=headers, url=api_url_calc, json=data_json, timeout=60)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.ReadTimeout:
+            print(f"Request timed out. Retrying... (Attempt {attempt + 1}/{max_retries})")
+            time.sleep(2)  # Add a small delay before retrying
+    raise Exception("Maximum retries reached. Unable to get a response.")
+    
     return response.json()
 
 def construire_jauge_score(score_remboursement_client):
@@ -97,7 +100,7 @@ customers_ids = get_customers_ids()
 st.sidebar.markdown('<p style="font-family: San Francisco, sans-serif; font-size: 16px; color: darkblue; font-weight: bold;">'
                     'Sélectionner le client à tester :</p>', unsafe_allow_html=True)
 customer_id = st.sidebar.selectbox('',customers_ids)
-api_url_customer = f'http://127.0.0.1:8000/api/v1/customers/{customer_id}'
+api_url_customer = f'https://juguirlet.pythonanywhere.com/api/v1/customers/{customer_id}'
 customer_data = get_customer_values(customer_id)
 
 st.sidebar.markdown('<p style="font-family: San Francisco, sans-serif; font-size: 15px; color: darkblue;">'
