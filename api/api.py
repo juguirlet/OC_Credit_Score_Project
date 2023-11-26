@@ -1,16 +1,17 @@
 from flask import Flask, jsonify, request
 import pandas as pd
-import pickle
 import numpy as np
+import pickle
+#import sklearn
 
 app = Flask(__name__)
 
 # import LGBM classifier
-LGBMclassifier = open("lgbm_classifier.pkl", "rb")
-classifier = pickle.load(LGBMclassifier)
+LGBMclassifier = open(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\api\lgbm_classifier.pkl',"rb")
+classifier = pickle.load(LGBMclassifier, encoding='utf-8')
 
 # import df test
-app_test = pd.read_csv(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\df_merged_test_reduced.csv')
+app_test = pd.read_csv(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\df_merged_test_reduced.csv')
 
 @app.route('/', methods=['GET'])
 def home():
@@ -37,10 +38,6 @@ def predict_customer(customer_id: int):
         return "Error: No id field provided. Please specify an id"
     predicted_class = app_test.loc[app_test['SK_ID_CURR'] == customer_id,'Predicted_Class'].tolist()
     return predicted_class
-
-@app.route("/api/v1/calc")
-def main():
-    return render_template('calc_ajax.html', reload = time.time())
 
 # function to calculate proba with values selected on the app
 def predict_function(data):

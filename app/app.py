@@ -3,21 +3,22 @@ import numpy as np
 from PIL import Image
 import requests
 import json
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+#from streamlit_shap import st_shap
 import shap
 import pickle
 import pandas as pd
 from sklearn.preprocessing import RobustScaler
 
 # import LGBM classifier
-LGBMclassifier = open(r"C:\Users\guirletj\Desktop\Test_envir\Projet 7\models\lgbm_classifier.pkl", "rb")
+LGBMclassifier = open(r"C:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\api\lgbm_classifier.pkl", "rb")
 classifier = pickle.load(LGBMclassifier)
 
 # import df test
-app_test = pd.read_csv(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\df_merged_test_reduced.csv')
+app_test = pd.read_csv(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\df_merged_test_reduced.csv')
 
 # api url
-api_url = "http://127.0.0.1:8000"
+api_url = "https://juguirlet.pythonanywhere.com/"
 
 # functions to get the results from the api
 def get_customers_ids():
