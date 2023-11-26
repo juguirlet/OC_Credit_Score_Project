@@ -8,6 +8,7 @@ import shap
 import pickle
 import pandas as pd
 from sklearn.preprocessing import RobustScaler
+import time
 
 # import LGBM classifier
 LGBMclassifier = open('api/lgbm_classifier.pkl', 'rb')
