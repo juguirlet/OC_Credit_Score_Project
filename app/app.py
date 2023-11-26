@@ -11,11 +11,11 @@ import pandas as pd
 from sklearn.preprocessing import RobustScaler
 
 # import LGBM classifier
-LGBMclassifier = open(r"C:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\api\lgbm_classifier.pkl", "rb")
+LGBMclassifier = open('api/lgbm_classifier.pkl', 'rb')
 classifier = pickle.load(LGBMclassifier)
 
 # import df test
-app_test = pd.read_csv(r'c:\Users\guirletj\Desktop\Test_envir\Projet 7\OC_Credit_Score_Project\df_merged_test_reduced.csv')
+app_test = pd.read_csv('df_merged_test_reduced.csv')
 
 # api url
 api_url = "https://juguirlet.pythonanywhere.com/"
