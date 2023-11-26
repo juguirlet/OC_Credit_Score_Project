@@ -60,8 +60,8 @@ def request_prediction(api_url_calc, data, max_retries=3):
     data_json = {'data': data}
     for attempt in range(max_retries):
         try:
-        response = requests.request(
-            method='POST', headers=headers, url=api_url_calc, json=data_json, timeout=60)
+            response = requests.request(
+                method='POST', headers=headers, url=api_url_calc, json=data_json, timeout=60)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.ReadTimeout:
