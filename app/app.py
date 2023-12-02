@@ -224,7 +224,7 @@ if predict_btn:
         shap_values_list, customer_values_array, features_names = get_customer_shap_values(data_df)
         st.set_option('deprecation.showPyplotGlobalUse', False)  # Suppress MatplotlibDeprecationWarning
         fig, ax = plt.subplots()
-        shap.summary_plot(shap_values_list, customer_values_array, features_names, show=False)
+        shap.summary_plot(shap_values_list[0], customer_values_array, features_names, show=False)
         st.pyplot(fig)
     
 pred = None
