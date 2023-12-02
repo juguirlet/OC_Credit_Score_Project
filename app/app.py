@@ -51,8 +51,8 @@ def get_customer_shap_values(data_df):
     customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
     shap_values_list = explainer.shap_values(customer_values_array)
-    shap_values = np.concatenate(shap_values_list, axis=0)
-    return shap_values, customer_values_array, features_names
+    features_names = data_df.columns.tolist()
+    return shap_values_list, customer_values_array, features_names
 
 
 def get_predicted_score(): #valeurs des variables
@@ -221,10 +221,10 @@ if predict_btn:
     jauge_score = construire_jauge_score(pred_score)
     st.pyplot(jauge_score)  
     with st.expander ("Voir les caractéristiques locales du client :"):
-        shap_values, customer_values_array, features_names = get_customer_shap_values(data_df)
+        shap_values_list, customer_values_array, features_names = get_customer_shap_values(data_df)
         st.set_option('deprecation.showPyplotGlobalUse', False)  # Suppress MatplotlibDeprecationWarning
         fig, ax = plt.subplots()
-        shap.summary_plot(shap_values[1], customer_values_array, features_names, show=False)  # Use show=False to avoid double plotting
+        shap.summary_plot(shap_values_list, customer_values_array, features_names, show=False)
         st.pyplot(fig)
     
 pred = None
