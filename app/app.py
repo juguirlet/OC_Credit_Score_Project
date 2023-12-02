@@ -35,23 +35,23 @@ def get_customer_values(customer_id):
     content = json.loads(values_customer_id.content.decode('utf-8'))
     return content
 
-def get_features_names():
-    features_names_list = app_test.columns.tolist()
-    features_names_list.remove('SK_ID_CURR')
-    features_names_list.remove('Predicted_Class')
-    return features_names_list
+def get_features_selected():
+    features_selected_list = app_test.columns.tolist()
+    features_selected_list.remove('SK_ID_CURR')
+    features_selected_list.remove('Predicted_Class')
+    return features_selected_list
 
-features_names = get_features_names()
+features_selected = get_features_selected()
 robust_scaler = RobustScaler()
-robust_scaler.fit(app_test[features_names])
+robust_scaler.fit(app_test[features_selected])
 
 def get_customer_shap_values(data_df):
-    features_names = data_df.columns.tolist()
+    features_selected = data_df.columns.tolist()
     scaled_data = robust_scaler.transform(data_df)
     customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
     shap_values_list = explainer.shap_values(customer_values_array)
-    return shap_values_list, customer_values_array, features_names
+    return shap_values_list, customer_values_array, features_selected
 
 
 def get_predicted_score(): #valeurs des variables
@@ -202,9 +202,9 @@ app_features_values['POS_COUNT'] = col2.number_input('POS_COUNT',
 predict_btn = st.button('Prédire')
 if predict_btn:
     # Reorder the columns in app_features_values to match features_names order
-    app_features_values_reordered = {feature: app_features_values[feature] for feature in features_names}
+    app_features_values_reordered = {feature: app_features_values[feature] for feature in features_selected}
     # Create DataFrame with reordered columns
-    data_df = pd.DataFrame([app_features_values_reordered], columns=features_names, index=[0])
+    data_df = pd.DataFrame([app_features_values_reordered], columns=features_selected, index=[0])
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     print(data_df)
     print(data_df.columns)
@@ -224,17 +224,17 @@ if predict_btn:
     jauge_score = construire_jauge_score(pred_score)
     st.pyplot(jauge_score)  
     with st.expander ("Voir les caractéristiques locales du client :"):
-        shap_values_list, customer_values_array, features_names = get_customer_shap_values(data_df)
+        shap_values_list, customer_values_array, features_selected = get_customer_shap_values(data_df)
         st.set_option('deprecation.showPyplotGlobalUse', False)  # Suppress MatplotlibDeprecationWarning
         fig, ax = plt.subplots()
-        shap.summary_plot(shap_values_list[0], customer_values_array, features_names, show=False)
+        shap.summary_plot(shap_values_list[0], customer_values_array, features_selected, show=False)
         st.pyplot(fig)
     
 pred = None
 
 feature_selected_1 = st.selectbox(
     'Sélectionner une 1re variable pour visualiser sa distribution selon le score du crédit',
-    features_names)
+    features_selected)
 
 def build_histogram(df, feature_selected_1, target):
     # Create a histogram using Matplotlib
@@ -271,7 +271,7 @@ col2.pyplot(histogram_target_1)
 
 feature_selected_2 = st.selectbox(
     'Sélectionner une 2e variable pour étudier les scores des clients selon les 2 variables sélectionnées',
-    features_names)
+    features_selected)
 
 def graph_two_features(feature_selected_1,feature_selected_2):
     # Create a figure and axis
