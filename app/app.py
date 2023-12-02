@@ -45,12 +45,12 @@ features_names = get_features_names()
 robust_scaler = RobustScaler()
 robust_scaler.fit(app_test[features_names])
 
-def get_customer_shap_values(data):
-    scaled_data = robust_scaler.transform([data])
-    customer_values_array = np.array(data).reshape(1, -1)
+def get_customer_shap_values(data_df):
+    features_names = data_df.columns.tolist()
+    scaled_data = robust_scaler.transform([data_df])
+    customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
     shap_values = explainer.shap_values(customer_values_array)
-    features_names = get_features_names()
     return shap_values, customer_values_array, features_names
 
 def get_predicted_score(): #valeurs des variables
@@ -219,7 +219,7 @@ if predict_btn:
     jauge_score = construire_jauge_score(pred_score)
     st.pyplot(jauge_score)  
     with st.expander ("Voir les caractéristiques locales du client :"):
-        shap_values, customer_values_array, features_names = get_customer_shap_values(data)
+        shap_values, customer_values_array, features_names = get_customer_shap_values(data_df)
         st.set_option('deprecation.showPyplotGlobalUse', False)  # Suppress MatplotlibDeprecationWarning
         fig, ax = plt.subplots()
         shap.summary_plot(shap_values[1], customer_values_array, features_names, show=False)  # Use show=False to avoid double plotting
