@@ -47,7 +47,7 @@ robust_scaler.fit(app_test[features_names])
 
 def get_customer_shap_values(data_df):
     features_names = data_df.columns.tolist()
-    scaled_data = robust_scaler.transform([data_df])
+    scaled_data = robust_scaler.transform(data_df)
     customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
     shap_values = explainer.shap_values(customer_values_array)
