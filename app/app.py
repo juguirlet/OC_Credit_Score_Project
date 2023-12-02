@@ -206,12 +206,9 @@ if predict_btn:
     # Create DataFrame with reordered columns
     data_df = pd.DataFrame([app_features_values_reordered], columns=features_selected, index=[0])
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
-    print(data_df)
     pred = request_prediction(api_url_calc, data_df)
-    print(pred)
     prediction_list = pred.get("prediction", None)
     pred_score = prediction_list[0][1]
-    #pred_score = 0
 
     if pred_score > 0.55:
         st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:red;'>Crédit refusé</p>",unsafe_allow_html=True)
@@ -219,6 +216,7 @@ if predict_btn:
         st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:green;'>Crédit accordé</p>",unsafe_allow_html=True)
     st.write('Le risque de défaut pour ce client est de {:.2%}.'.format(pred_score))
     st.write(data_df)
+    st.write(data_df.columns)
     st.write('Le seuil de décision est de 55%.')
     jauge_score = construire_jauge_score(pred_score)
     st.pyplot(jauge_score)  
