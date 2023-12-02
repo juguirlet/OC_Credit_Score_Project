@@ -197,31 +197,8 @@ app_features_values['POS_COUNT'] = col2.number_input('POS_COUNT',
 
 predict_btn = st.button('Prédire')
 if predict_btn:
-    data = [app_features_values['PAYMENT_RATE'],
-    app_features_values['EXT_SOURCE_2'],
-    app_features_values['EXT_SOURCE_3'],
-    app_features_values['DAYS_BIRTH'],
-    app_features_values['DAYS_EMPLOYED'],
-    app_features_values['AMT_ANNUITY'],
-    app_features_values['ANNUITY_INCOME_PERC'],
-    app_features_values['AMT_GOODS_PRICE'],
-    app_features_values['INSTAL_AMT_PAYMENT_MIN'],
-    app_features_values['ACTIVE_DAYS_CREDIT_MAX'],
-    app_features_values['PREV_CNT_PAYMENT_MEAN'],
-    app_features_values['APPROVED_CNT_PAYMENT_MEAN'],
-    app_features_values['INSTAL_AMT_PAYMENT_SUM'],
-    app_features_values['AMT_CREDIT'],
-    app_features_values['INSTAL_DAYS_ENTRY_PAYMENT_MEAN'],
-    app_features_values['POS_COUNT'],
-    app_features_values['DAYS_ID_PUBLISH'],
-    app_features_values['INSTAL_DAYS_ENTRY_PAYMENT_MAX'],
-    app_features_values['DAYS_EMPLOYED_PERC'],
-    app_features_values['PREV_AMT_ANNUITY_MEAN'],
-    app_features_values['APPROVED_AMT_DOWN_PAYMENT_MAX'],
-    app_features_values['INSTAL_DBD_MEAN'],
-    app_features_values['INSTAL_DAYS_ENTRY_PAYMENT_SUM'],
-    app_features_values['PREV_APP_CREDIT_PERC_MEAN'],
-    app_features_values['BURO_DAYS_CREDIT_MAX']]
+    data = app_features_values
+    data = data.reorder_levels(features_names_list, axis=1)
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     pred = request_prediction(api_url_calc, data)
     prediction_list = pred.get("prediction", None)
