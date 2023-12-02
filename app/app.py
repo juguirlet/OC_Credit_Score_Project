@@ -199,10 +199,10 @@ app_features_values['POS_COUNT'] = col2.number_input('POS_COUNT',
 
 predict_btn = st.button('Prédire')
 if predict_btn:
-    data = app_features_values
-    data = data.reorder_levels(features_names_list, axis=1)
+    data_df = pd.DataFrame(app_features_values)
+    data_df = data_df.reorder_levels(features_names_list, axis=1)
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
-    pred = request_prediction(api_url_calc, data)
+    pred = request_prediction(api_url_calc, data_df)
     prediction_list = pred.get("prediction", None)
     pred_score = prediction_list[0][1]
 
