@@ -203,9 +203,11 @@ if predict_btn:
     data_df = pd.DataFrame([app_features_values],columns=features_names, index=[0])
     data_df = data_df[features_names]
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
-    pred = request_prediction(api_url_calc, data_df)
-    prediction_list = pred.get("prediction", None)
-    pred_score = prediction_list[0][1]
+    print(data_df)
+    #pred = request_prediction(api_url_calc, data_df)
+    #prediction_list = pred.get("prediction", None)
+    #pred_score = prediction_list[0][1]
+    pred_score = 0
 
     if pred_score > 0.55:
         st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:red;'>Crédit refusé</p>",unsafe_allow_html=True)
