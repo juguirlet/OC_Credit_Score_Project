@@ -7,12 +7,15 @@ import matplotlib.pyplot as plt
 import shap
 import pickle
 import pandas as pd
-from sklearn.preprocessing import RobustScaler
 import time
 
 # import LGBM classifier
 LGBMclassifier = open('api/lgbm_classifier.pkl', 'rb')
 classifier = pickle.load(LGBMclassifier)
+
+# import robust scaler fit on data_train
+LGBM_robust_scaler = open('api/lgbm_robust_scaler.pkl', 'rb')
+robust_scaler = pickle.load(LGBM_robust_scaler)
 
 # import df test
 file_url = 'https://raw.githubusercontent.com/juguirlet/OC_Credit_Score_Project/main/df_merged_test_reduced.csv'
@@ -42,8 +45,6 @@ def get_features_selected():
     return features_selected_list
 
 features_selected = get_features_selected()
-robust_scaler = RobustScaler()
-robust_scaler.fit(app_test[features_selected])
 
 def get_customer_shap_values(data_df):
     features_selected = data_df.columns.tolist()
