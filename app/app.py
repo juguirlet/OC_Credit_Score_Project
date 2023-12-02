@@ -51,7 +51,6 @@ def get_customer_shap_values(data_df):
     customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
     shap_values_list = explainer.shap_values(customer_values_array)
-    features_names = data_df.columns.tolist()
     return shap_values_list, customer_values_array, features_names
 
 
@@ -206,7 +205,8 @@ if predict_btn:
     data_df = data_df[features_names]
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     print(data_df)
-    #pred = request_prediction(api_url_calc, data_df)
+    pred = request_prediction(api_url_calc, data_df)
+    print(pred)
     #prediction_list = pred.get("prediction", None)
     #pred_score = prediction_list[0][1]
     pred_score = 0
