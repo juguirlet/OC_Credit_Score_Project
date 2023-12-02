@@ -201,8 +201,10 @@ app_features_values['POS_COUNT'] = col2.number_input('POS_COUNT',
 
 predict_btn = st.button('Prédire')
 if predict_btn:
-    data_df = pd.DataFrame([app_features_values],columns=features_names, index=[0])
-    data_df = data_df[features_names]
+    # Reorder the columns in app_features_values to match features_names order
+    app_features_values_reordered = {feature: app_features_values[feature] for feature in features_names}
+    # Create DataFrame with reordered columns
+    data_df = pd.DataFrame([app_features_values_reordered], columns=features_names, index=[0])
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     print(data_df)
     pred = request_prediction(api_url_calc, data_df)
