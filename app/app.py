@@ -50,8 +50,10 @@ def get_customer_shap_values(data_df):
     scaled_data = robust_scaler.transform(data_df)
     customer_values_array = scaled_data[0, :].reshape(1, -1)
     explainer = shap.TreeExplainer(classifier.steps[-1][1])
-    shap_values = explainer.shap_values(customer_values_array)
+    shap_values_list = explainer.shap_values(customer_values_array)
+    shap_values = np.concatenate(shap_values_list, axis=0)
     return shap_values, customer_values_array, features_names
+
 
 def get_predicted_score(): #valeurs des variables
     predicted_score_customer_id = requests.get(api_url + "/api/v1/customers/id/predict")
