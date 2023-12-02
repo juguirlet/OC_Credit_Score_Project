@@ -215,8 +215,6 @@ if predict_btn:
     else:
         st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:green;'>Crédit accordé</p>",unsafe_allow_html=True)
     st.write('Le risque de défaut pour ce client est de {:.2%}.'.format(pred_score))
-    st.write(data_df)
-    st.write(data_df.columns)
     st.write('Le seuil de décision est de 55%.')
     jauge_score = construire_jauge_score(pred_score)
     st.pyplot(jauge_score)  
