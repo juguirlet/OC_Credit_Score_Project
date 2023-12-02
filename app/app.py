@@ -60,7 +60,8 @@ def get_predicted_score(): #valeurs des variables
 
 def request_prediction(api_url_calc, data, max_retries=3):
     headers = {"Content-Type": "application/json"}
-    data_json = {'data': data}
+    data_dict = data.to_dict(orient='records')[0]
+    data_json = {'data': data_dict}
     for attempt in range(max_retries):
         try:
             response = requests.request(
