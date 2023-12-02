@@ -207,8 +207,9 @@ if predict_btn:
     data_df = pd.DataFrame([app_features_values_reordered], columns=features_names, index=[0])
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     print(data_df)
-    pred = request_prediction(api_url_calc, data_df)
-    print(pred)
+    print(data_df.columns)
+    #pred = request_prediction(api_url_calc, data_df)
+    #print(pred)
     #prediction_list = pred.get("prediction", None)
     #pred_score = prediction_list[0][1]
     pred_score = 0
