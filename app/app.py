@@ -15,12 +15,12 @@ classifier = pickle.load(LGBMclassifier)
 
 # import robust scaler fit on data_train
 LGBM_robust_scaler = open('api/lgbm_robust_scaler.pkl', 'rb')
-robust_scaler = pickle.load(LGBM_robust_scaler)
+robust_scaler_tuple = pickle.load(LGBM_robust_scaler)
+robust_scaler = robust_scaler_tuple[1]
 
 # import df test
 file_url = 'https://raw.githubusercontent.com/juguirlet/OC_Credit_Score_Project/main/df_merged_test_reduced.csv'
 app_test = pd.read_csv(file_url)
-
 
 # api url
 api_url = "https://juguirlet.pythonanywhere.com/"
