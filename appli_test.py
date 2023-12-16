@@ -36,7 +36,7 @@ def test_get_features_selected(streamlit_client):
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     #data = streamlit_client.cache(lambda: streamlit_client.head(1))()
-    data = streamlit_client.head(1)
+    data = streamlit_client.dataframe({'column_name': ['mocked_data']})
     response = request_prediction(api_url_calc, data)
     assert "prediction" in response
 
