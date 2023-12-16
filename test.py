@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 @pytest.fixture
 def streamlit_client():
     script_path = "app/app.py"
-    with AppTest(script_path) as app_test: 
+    default_timeout = 3
+    with AppTest(script_path, default_timeout=default_timeout) as app_test:
         yield app_test
 
 def test_get_customers_ids(streamlit_client):
