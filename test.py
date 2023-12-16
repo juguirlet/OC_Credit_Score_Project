@@ -30,7 +30,7 @@ def test_get_customer_shap_values(streamlit_client):
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     data = st.cache(lambda: app.app_test.head(1))()
-    response = request_prediction(api_url_calc, data)
+    response = app.request_prediction(api_url_calc, data)
     assert "prediction" in response
 
 def test_construire_jauge_score(streamlit_client):
