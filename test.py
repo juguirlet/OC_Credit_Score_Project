@@ -28,13 +28,13 @@ def test_get_features_selected(streamlit_client):
     assert isinstance(features_selected_list, list)
 
 def test_get_customer_shap_values(streamlit_client):
-    data_df = streamlit_client.cache(lambda: app.app_test.head(1))()
+    data_df = streamlit_client.cache(lambda: streamlit_client.head(1))()
     shap_values_list, _, _ = get_customer_shap_values(data_df)
     assert isinstance(shap_values_list, list)
 
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
-    data = streamlit_client.cache(lambda: app.app_test.head(1))()
+    data = streamlit_client.cache(lambda: streamlit_client.head(1))()
     response = request_prediction(api_url_calc, data)
     assert "prediction" in response
 
