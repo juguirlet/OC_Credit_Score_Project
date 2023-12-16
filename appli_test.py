@@ -2,6 +2,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 from app.app import get_customers_ids, get_customer_values, get_features_selected, request_prediction, construire_jauge_score
 import matplotlib.pyplot as plt
+import pandas as pd
 #import shap
 
 @pytest.fixture
