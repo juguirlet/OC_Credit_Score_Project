@@ -1,6 +1,6 @@
 import pytest
 from streamlit.testing.v1 import AppTest
-from app.app import get_customers_ids, get_customer_values, get_features_selected, get_customer_shap_values, request_prediction, construire_jauge_score
+from app.app import get_customers_ids, get_customer_values, get_features_selected, request_prediction, construire_jauge_score
 import matplotlib.pyplot as plt
 #import shap
 
