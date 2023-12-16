@@ -1,6 +1,7 @@
 import pytest
 import streamlit as st
 import app
+import matplotlib.pyplot as plt
 
 # Fixture to create a Streamlit client for testing
 @pytest.fixture
