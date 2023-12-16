@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Création d'un client fictif pour tester l'application sur streamlit
 @pytest.fixture
 def streamlit_client():
-    with st._is_running_with_streamlit_lock():
+    with st._is_running_with_streamlit():
         yield st
 
 def test_get_customers_ids(streamlit_client):
