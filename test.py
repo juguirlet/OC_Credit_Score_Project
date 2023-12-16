@@ -3,18 +3,19 @@ from streamlit.testing.v1 import AppTest
 import app
 import matplotlib.pyplot as plt
 
-# Création d'un client fictif pour tester l'application sur streamlit
 @pytest.fixture
 def streamlit_client():
     script_path = "app/app.py"
-    default_timeout = 3
 
-    app_test = AppTest(script_path, default_timeout=default_timeout)
-    app_test.start()
+    # Initialize the app.
+    app_test = AppTest.from_file(script_path, default_timeout=3)
+    # Run the app.
+    app_test.run()
     
     yield app_test
     
-    app_test.stop()
+    # Optionally, you can stop the app after the tests if needed.
+    app_test.close()
 
 def test_get_customers_ids(streamlit_client):
     customers_ids = app.get_customers_ids()
