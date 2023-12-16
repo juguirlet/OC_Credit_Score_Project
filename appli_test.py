@@ -1,6 +1,5 @@
 import pytest
 from streamlit.testing.v1 import AppTest
-import streamlit.testing as st_testing
 from app.app import get_customers_ids, get_customer_values, get_features_selected, request_prediction, construire_jauge_score
 import matplotlib.pyplot as plt
 #import shap
@@ -37,7 +36,6 @@ def test_get_features_selected(streamlit_client):
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     #data = streamlit_client.cache(lambda: streamlit_client.head(1))()
-    streamlit_client = st_testing.StreamlitClient()
     data = streamlit_client.head(1)
     response = request_prediction(api_url_calc, data)
     assert "prediction" in response
