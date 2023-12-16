@@ -1,13 +1,14 @@
 import pytest
-import streamlit as st
+from streamlit.testing.v1 import AppTest
 import app
 import matplotlib.pyplot as plt
 
 # Création d'un client fictif pour tester l'application sur streamlit
 @pytest.fixture
 def streamlit_client():
-    with st._is_running_with_streamlit():
-        yield st
+    script_path = "app/app.py"
+    with AppTest(script_path) as app_test: 
+        yield app_test
 
 def test_get_customers_ids(streamlit_client):
     customers_ids = app.get_customers_ids()
@@ -23,13 +24,13 @@ def test_get_features_selected(streamlit_client):
     assert isinstance(features_selected_list, list)
 
 def test_get_customer_shap_values(streamlit_client):
-    data_df = st.cache(lambda: app.app_test.head(1))()
+    data_df = streamlit_client.cache(lambda: app.app_test.head(1))()
     shap_values_list, _, _ = app.get_customer_shap_values(data_df)
     assert isinstance(shap_values_list, list)
 
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
-    data = st.cache(lambda: app.app_test.head(1))()
+    data = streamlit_client.cache(lambda: app.app_test.head(1))()
     response = app.request_prediction(api_url_calc, data)
     assert "prediction" in response
 
