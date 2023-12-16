@@ -8,8 +8,13 @@ import matplotlib.pyplot as plt
 def streamlit_client():
     script_path = "app/app.py"
     default_timeout = 3
-    with AppTest(script_path, default_timeout=default_timeout) as app_test:
-        yield app_test
+
+    app_test = AppTest(script_path, default_timeout=default_timeout)
+    app_test.start()
+    
+    yield app_test
+    
+    app_test.stop()
 
 def test_get_customers_ids(streamlit_client):
     customers_ids = app.get_customers_ids()
