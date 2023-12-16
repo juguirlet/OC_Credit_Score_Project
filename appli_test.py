@@ -36,8 +36,11 @@ def test_get_features_selected(streamlit_client):
 def test_request_prediction(streamlit_client):
     api_url_calc = f'https://juguirlet.pythonanywhere.com/api/v1/predict'
     #data = streamlit_client.cache(lambda: streamlit_client.head(1))()
-    data = streamlit_client.dataframe({'column_name': ['mocked_data']})
-    response = request_prediction(api_url_calc, data)
+    mock_data = {'column_name': ['mocked_data']}
+    streamlit_client.dataframe(pd.DataFrame(mock_data))
+
+    # Now you can call your request_prediction function with the mocked data
+    response = request_prediction(api_url_calc, streamlit_client.dataframe)
     assert "prediction" in response
 
 def test_construire_jauge_score(streamlit_client):
