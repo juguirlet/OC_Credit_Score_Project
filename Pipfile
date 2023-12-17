@@ -15,8 +15,26 @@ flask = "*"
 scikit-learn = "*"
 lightgbm = "*"
 shap = "*"
+nltk = "*"
+openpyxl = "*"
+gensim = "*"
+unidecode = "*"
+evidently = "*"
+xgboost = "*"
+imblearn = "*"
+hyperopt = "*"
+mlflow = "*"
+seaborn = "*"
+pytest = "*"
+setuptools = "*"
+distutils = "*"
 
 [dev-packages]
+traitlets = "*"
+jupyter = "*"
 
 [requires]
 python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true
